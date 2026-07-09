@@ -1,6 +1,6 @@
 {
   "name": "@node-projects/jszip",
-  "version": "4.1.6",
+  "version": "4.2.0",
   "author": "Stuart Knightley <stuart@stuartk.com>",
   "description": "Create, read and edit .zip files with JavaScript http://stuartk.com/jszip",
   "scripts": {
@@ -14,7 +14,6 @@
     "start": "web-dev-server --open",
     "prepublishOnly": "npm run bundle",
     "bundle": "esbuild ./lib/index.js --format=esm --minify --external:pako --platform=neutral --bundle --outfile=./lib/index-min.js"
-  
   },
   "contributors": [
     {
@@ -43,25 +42,26 @@
     "inflate"
   ],
   "devDependencies": {
+    "@web/dev-server": "^1.0.0",
     "benchmark": "^2.1.4",
-    "browserify": "~13.0.0",
-    "esbuild": "^0.25.10",
-    "eslint": "^8.18.0",
-    "grunt": "~0.4.1",
-    "grunt-browserify": "~5.0.0",
-    "grunt-cli": "~1.1.0",
-    "grunt-contrib-uglify": "~4.0.1",
-    "http-server": "^13.0.2",
-    "jszip-utils": "~0.0.2",
-    "package-json-versionify": "1.0.2",
-    "playwright": "^1.51.0",
-    "qunit": "~2.9.2",
-    "tmp": "0.0.28",
-    "typescript": "^5.9.2",
-    "@web/dev-server": "^0.4.6"
+    "browserify": "~17.0.1",
+    "esbuild": "^0.28.1",
+    "eslint": "^10.6.0",
+    "grunt": "~1.6.2",
+    "grunt-browserify": "~6.0.0",
+    "grunt-cli": "~1.5.0",
+    "grunt-contrib-uglify": "~5.2.2",
+    "http-server": "^14.1.1",
+    "jszip-utils": "~0.1.0",
+    "package-json-versionify": "1.0.4",
+    "playwright": "^1.61.1",
+    "qunit": "~2.26.0",
+    "tmp": "0.2.7",
+    "typescript": "^7.0.2"
   },
   "dependencies": {
-    "pako": "^2.1.0"
+    "@types/node": "^26.1.1",
+    "pako": "^3.0.1"
   },
   "license": "(MIT OR GPL-3.0-or-later)"
 }
