@@ -63,5 +63,8 @@
     "@types/node": "^26.1.1",
     "pako": "^3.0.1"
   },
-  "license": "(MIT OR GPL-3.0-or-later)"
+  "license": "(MIT OR GPL-3.0-or-later)",
+  "engines": {
+    "node": ">= 20"
+  }
 }
