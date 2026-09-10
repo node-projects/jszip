@@ -39,7 +39,10 @@ async function runBrowser(browserType, waitFor, file) {
 }
 
 async function runBrowsers(waitFor, file) {
-    const browsersTypes = ["chromium", "firefox", "webkit"];
+    const browsersTypes = (process.env.PLAYWRIGHT_BROWSERS || "chromium,firefox,webkit")
+        .split(",")
+        .map(browser => browser.trim())
+        .filter(Boolean);
 
     const server = createServer({root: path.join(__dirname, "..")});
     await new Promise(resolve => server.listen(8080, "127.0.0.1", resolve));

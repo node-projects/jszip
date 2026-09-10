@@ -440,7 +440,7 @@ QUnit.module("load", function () {
 
     JSZipTestUtils.testZipFile("load(promise) works", "ref/all.zip", function(assert, fileAsString) {
         var done = assert.async();
-        JSZip.loadAsync(JSZip.external.Promise.resolve(fileAsString))
+        JSZip.loadAsync(Promise.resolve(fileAsString))
             .then(function (zip) {
                 return zip.file("Hello.txt").async("string");
             }).then(function (content){
@@ -511,7 +511,7 @@ QUnit.module("load", function () {
         zip.file("Bye.txt", "au revoir");
         zip.loadAsync(file)
             .then(function success(zip) {
-                return JSZip.external.Promise.all([
+                return Promise.all([
                     zip.file("Hello.txt").async("text"),
                     zip.file("Bye.txt").async("text")
                 ]);

@@ -1,6 +1,8 @@
 "use strict";
 
-QUnit.module("external");
+// The ESM fork uses the native global Promise directly and intentionally no
+// longer exposes the upstream JSZip.external.Promise replacement hook.
+QUnit.module.skip("external");
 
 /**
  * Creates a wrapper around an existing Promise implementation to count

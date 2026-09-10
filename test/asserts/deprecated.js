@@ -7,7 +7,7 @@ QUnit.test("Removed load method throws an exception", function(assert) {
         function() {
             new JSZip().load("");
         },
-        /upgrade guide/,
+        TypeError,
         "load() throws an exception"
     );
 });
@@ -27,7 +27,7 @@ QUnit.test("Removed asText method throws an exception", function(assert) {
         function() {
             file.asText();
         },
-        /upgrade guide/,
+        TypeError,
         "file.asText() throws an exception"
     );
 });

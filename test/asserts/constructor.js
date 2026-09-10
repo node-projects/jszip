@@ -11,7 +11,8 @@ QUnit.test("new JSZip()", function(assert){
     assert.ok(zip instanceof JSZip, "Constructor works");
 });
 
-QUnit.test("JSZip()", function(assert){
-    var zip = JSZip();
-    assert.ok(zip instanceof JSZip, "Constructor adds `new` before itself where necessary");
+QUnit.test("JSZip() requires new", function(assert){
+    assert.throws(function () {
+        JSZip();
+    }, TypeError, "ES class constructors require `new`");
 });
