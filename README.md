@@ -2,6 +2,10 @@ JSZip
 =====
 Afork of jszip as ESM module!
 
+Upstream baseline: reviewed and selectively synchronized through
+[`609d95f4098a11507160cd101e0b181cfad6a582`](https://github.com/Stuk/jszip/commit/609d95f4098a11507160cd101e0b181cfad6a582).
+Fork-specific build, release, dependency, and CI differences are intentionally retained.
+
 A library for creating, reading and editing .zip files with JavaScript, with a
 lovely and simple API.
 
