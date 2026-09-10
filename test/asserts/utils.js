@@ -1,8 +1,6 @@
-"use strict";
-
 // These tests only run in Node
-var vm = require("vm");
-var utils = require("../../lib/utils");
+import vm from "node:vm";
+import * as utils from "../../lib/utils.js";
 
 QUnit.module("utils");
 

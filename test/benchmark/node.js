@@ -1,7 +1,8 @@
-"use strict";
+import Benchmark from "benchmark";
+import JSZip from "../../lib/index.js";
+import benchmark from "./benchmark.js";
 
-globalThis.Benchmark = require("benchmark");
-globalThis.JSZip = require("../../lib/index").JSZip;
+globalThis.Benchmark = Benchmark;
+globalThis.JSZip = JSZip;
 
-const benchmark = require("./benchmark");
 benchmark("nodebuffer");

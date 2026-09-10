@@ -2,6 +2,8 @@
 
 QUnit.module("stream", function () {
 
+    var nodeTestUtils = globalThis.JSZipNodeTestUtils;
+
     QUnit.module("internal");
 
     QUnit.test("A stream is pausable", function (assert) {
@@ -48,15 +50,13 @@ QUnit.module("stream", function () {
     });
 
     QUnit.module("nodejs");
-    if (JSZip.support.nodestream) {
-        var fs = require("fs");
-    }
+    var fs = nodeTestUtils && nodeTestUtils.fs;
 
     function generateStreamTest(name, ref, createFunction, generateOptions) {
         JSZipTestUtils.testZipFile(name,ref, function(assert, expected) {
             var done = assert.async();
 
-            var tempFile = require("tmp").tmpNameSync({postfix:".zip"});
+            var tempFile = nodeTestUtils.tmpNameSync({postfix:".zip"});
 
             var zip = createFunction();
 
@@ -87,7 +87,7 @@ QUnit.module("stream", function () {
     }
     function zipObjectStreamTest(name, createFunction) {
         QUnit.test(name, function(assert) {
-            var tempFile = require("tmp").tmpNameSync({postfix:".txt"});
+            var tempFile = nodeTestUtils.tmpNameSync({postfix:".txt"});
             var done = assert.async();
             createFunction().pipe(fs.createWriteStream(tempFile))
                 .on("close", function () {

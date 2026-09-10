@@ -518,7 +518,7 @@ QUnit.module("file", function () {
     if (JSZip.support.nodebuffer) {
         QUnit.test("add file: file(name, Buffer)", function (assert) {
             var str2buffer = function (str) {
-                var array = new Buffer(str.length);
+                var array = Buffer.alloc(str.length);
                 for(var i = 0; i < str.length; i++) {
                     array[i] = str.charCodeAt(i);
                 }

@@ -8,8 +8,8 @@
     <script src="../../node_modules/benchmark/node_modules/lodash/lodash.js"></script>
     <script src="../../node_modules/benchmark/benchmark.js"></script>
     <script src="../../dist/jszip.js"></script>
-    <script src="./benchmark.js"></script>
-    <script>
+    <script type="module">
+        import benchmark from "./benchmark.js";
         benchmark("arraybuffer");
     </script>
 </body>

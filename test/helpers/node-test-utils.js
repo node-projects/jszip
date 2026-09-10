@@ -1,11 +1,12 @@
-"use strict";
+import fs from "node:fs";
+import path from "node:path";
+import { tmpNameSync } from "tmp";
+import JSZip from "../../lib/index.js";
 
-var fs = require("fs");
-var path = require("path");
+globalThis.JSZip = JSZip;
+globalThis.JSZipNodeTestUtils = { fs, tmpNameSync };
 
-global.JSZip = require("../../lib/index").JSZip;
-
-global.JSZipTestUtils.loadZipFile = function(name, callback) {
+globalThis.JSZipTestUtils.loadZipFile = function(name, callback) {
     fs.readFile(path.join("test", name), "binary", callback);
 };
 process.on("uncaughtException", function(err) {

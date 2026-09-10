@@ -123,7 +123,7 @@ QUnit.module("load", function () {
     if (JSZip.support.nodebuffer) {
         JSZipTestUtils.testZipFile("load(Buffer) works", "ref/all.zip", function(assert, fileAsString) {
             var done = assert.async();
-            var file = new Buffer(fileAsString.length);
+            var file = Buffer.alloc(fileAsString.length);
             for( var i = 0; i < fileAsString.length; ++i ) {
                 file[i] = fileAsString.charCodeAt(i);
             }

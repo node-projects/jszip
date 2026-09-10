@@ -237,4 +237,4 @@
     JSZipTestUtils.oldPromise = global.Promise;
 
     global.JSZipTestUtils = JSZipTestUtils;
-})(typeof window !== "undefined" && window || global);
+})(typeof window !== "undefined" && window || globalThis);

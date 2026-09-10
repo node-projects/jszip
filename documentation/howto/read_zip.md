@@ -30,7 +30,7 @@ JSZipUtils.getBinaryContent('path/to/content.zip', function(err, data) {
 
 // or, with promises:
 
-new JSZip.external.Promise(function (resolve, reject) {
+new Promise(function (resolve, reject) {
     JSZipUtils.getBinaryContent('path/to/content.zip', function(err, data) {
         if (err) {
             reject(err);
@@ -73,10 +73,8 @@ JSZip can read Buffers so you can do the following :
 #### Local file
 
 ```js
-"use strict";
-
-var fs = require("fs");
-var JSZip = require("jszip");
+import fs from "node:fs";
+import JSZip from "@node-projects/jszip";
 
 // read a zip file
 fs.readFile("test.zip", function(err, data) {
@@ -86,10 +84,10 @@ fs.readFile("test.zip", function(err, data) {
     });
 });
 // or
-new JSZip.external.Promise(function (resolve, reject) {
+new Promise(function (resolve, reject) {
     fs.readFile("test.zip", function(err, data) {
         if (err) {
-            reject(e);
+            reject(err);
         } else {
             resolve(data);
         }
@@ -107,10 +105,10 @@ fs.readFile("picture.png", function(err, data) {
     zip.file("picture.png", data);
 });
 // or
-var contentPromise = new JSZip.external.Promise(function (resolve, reject) {
+var contentPromise = new Promise(function (resolve, reject) {
     fs.readFile("picture.png", function(err, data) {
         if (err) {
-            reject(e);
+            reject(err);
         } else {
             resolve(data);
         }
@@ -126,78 +124,20 @@ zip.file("picture.png", stream);
 
 #### Remote file
 
-There are a lot of nodejs libraries doing http requests, from the built-in
-[http](http://nodejs.org/docs/latest/api/http.html) to the
-[npm packages](https://www.npmjs.org/browse/keyword/http). Here are two
-examples, one with the default http API, the other with
-[request](https://github.com/mikeal/request) (but you're free to use your
-favorite library !). If possible, download the file as a Buffer (you will get
-better performances). If it's not possible, you can fallback to a binary string
-(the option is likely to be `encoding : "binary"`).
+Modern Node.js provides `fetch`. Download the response as an `ArrayBuffer` and
+pass it directly to JSZip.
 
-##### With http :
+##### With fetch:
 
 ```js
-"use strict";
+import JSZip from "@node-projects/jszip";
 
-var http = require("http");
-var url = require("url");
-var JSZip = require("jszip");
+const response = await fetch("http://localhost/.../file.zip");
+if (!response.ok) {
+    throw new Error(`Download failed: ${response.status}`);
+}
 
-var req = http.get(url.parse("http://localhost/.../file.zip"), function (res) {
-  if (res.statusCode !== 200) {
-    console.log(res.statusCode);
-    // handle error
-    return;
-  }
-  var data = [], dataLen = 0;
-
-  // don't set the encoding, it will break everything !
-  // or, if you must, set it to null. In that case the chunk will be a string.
-
-  res.on("data", function (chunk) {
-    data.push(chunk);
-    dataLen += chunk.length;
-  });
-
-  res.on("end", function () {
-    var buf = Buffer.concat(data);
-
-    // here we go !
-    JSZip.loadAsync(buf).then(function (zip) {
-      return zip.file("content.txt").async("string");
-    }).then(function (text) {
-      console.log(text);
-    });
-  });
-});
-
-req.on("error", function(err){
-  // handle error
-});
-```
-
-##### With request :
-
-```js
-"use strict";
-
-var request = require('request');
-var JSZip = require("jszip");
-
-request({
-  method : "GET",
-  url : "http://localhost/.../file.zip",
-  encoding: null // <- this one is important !
-}, function (error, response, body) {
-  if(error ||  response.statusCode !== 200) {
-    // handle error
-    return;
-  }
-  JSZip.loadAsync(body).then(function (zip) {
-    return zip.file("content.txt").async("string");
-  }).then(function (text) {
-    console.log(text);
-  });
-});
+const zip = await JSZip.loadAsync(await response.arrayBuffer());
+const text = await zip.file("content.txt").async("string");
+console.log(text);
 ```

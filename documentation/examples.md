@@ -14,18 +14,14 @@ modify them. You can also import an existing zip file or generate one.
 For a browser, there are two interesting files : `dist/jszip.js` and
 `dist/jszip.min.js` (include just one).
 
-If you use an AMD loader (RequireJS for example) JSZip will register itself :
-you just have to put the js file at the right place, or configure the loader
-(see [here for RequireJS](http://requirejs.org/docs/api.html#config-paths)).
-
 Without any loader, JSZip will declare in the global scope a variable named `JSZip`.
 
 #### In nodejs
 
-In nodejs, you can `require` it :
+In Node.js, import the ESM package:
 
 ```js
-var JSZip = require("jszip");
+import JSZip from "@node-projects/jszip";
 ```
 
 ### Basic manipulations
@@ -117,4 +113,3 @@ new_zip.loadAsync(content)
     zip.file("hello.txt").async("string"); // a promise of "Hello World\n"
 });
 ```
-

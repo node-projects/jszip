@@ -1,6 +1,6 @@
 JSZip
 =====
-Afork of jszip as ESM module!
+A fork of JSZip maintained as a modern ESM package.
 
 Upstream baseline: reviewed and selectively synchronized through
 [`609d95f4098a11507160cd101e0b181cfad6a582`](https://github.com/Stuk/jszip/commit/609d95f4098a11507160cd101e0b181cfad6a582).
@@ -11,7 +11,13 @@ lovely and simple API.
 
 See https://stuk.github.io/jszip for all the documentation.
 
+```shell
+npm install @node-projects/jszip
+```
+
 ```javascript
+import JSZip from "@node-projects/jszip";
+
 const zip = new JSZip();
 
 zip.file("Hello.txt", "Hello World\n");
@@ -35,4 +41,4 @@ License
 -------
 
 JSZip is dual-licensed. You may use it under the MIT license *or* the GPLv3
-license. See [LICENSE.markdown](LICENSE.markdown).
+license. See [LICENSE.md](LICENSE.md).

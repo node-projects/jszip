@@ -1,8 +1,40 @@
-"use strict";
+import { createServer } from "node:http";
+import { readFile, stat } from "node:fs/promises";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+import playwright from "playwright";
 
-const path = require("path");
-const playwright = require("playwright");
-const createServer = require("http-server").createServer;
+const projectRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
+const contentTypes = {
+    ".css": "text/css; charset=utf-8",
+    ".gif": "image/gif",
+    ".html": "text/html; charset=utf-8",
+    ".js": "text/javascript; charset=utf-8",
+    ".json": "application/json; charset=utf-8",
+    ".zip": "application/zip"
+};
+
+async function serveStaticFile(request, response) {
+    try {
+        const requestPath = decodeURIComponent(new URL(request.url, "http://127.0.0.1").pathname);
+        let filePath = path.resolve(projectRoot, "." + requestPath);
+        const relativePath = path.relative(projectRoot, filePath);
+        if (relativePath.startsWith("..") || path.isAbsolute(relativePath)) {
+            response.writeHead(403).end("Forbidden");
+            return;
+        }
+        if ((await stat(filePath)).isDirectory()) {
+            filePath = path.join(filePath, "index.html");
+        }
+        const body = await readFile(filePath);
+        response.writeHead(200, {
+            "Content-Type": contentTypes[path.extname(filePath)] || "application/octet-stream"
+        });
+        response.end(body);
+    } catch {
+        response.writeHead(404).end("Not found");
+    }
+}
 
 /** @typedef {{
       name: string,
@@ -44,7 +76,7 @@ async function runBrowsers(waitFor, file) {
         .map(browser => browser.trim())
         .filter(Boolean);
 
-    const server = createServer({root: path.join(__dirname, "..")});
+    const server = createServer(serveStaticFile);
     await new Promise(resolve => server.listen(8080, "127.0.0.1", resolve));
     console.log("Server started");
 

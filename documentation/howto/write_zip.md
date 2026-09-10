@@ -96,8 +96,8 @@ recommend having a look at some of his [examples](http://picurl.org/gears/zipper
 JSZip can generate Buffers so you can do the following :
 
 ```js
-var fs = require("fs");
-var JSZip = require("jszip");
+import fs from "node:fs";
+import JSZip from "@node-projects/jszip";
 
 var zip = new JSZip();
 // zip.file("file", content);
@@ -112,5 +112,4 @@ zip
     console.log("out.zip written.");
 });
 ```
-
 
